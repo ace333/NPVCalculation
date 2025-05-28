@@ -1,0 +1,102 @@
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: mongo_db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "RootUser"
+      MONGO_INITDB_ROOT_PASSWORD: "Password123"
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - npvcalculation_network
+
+  rabbitmq:
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: "rb_user"
+      RABBITMQ_DEFAULT_PASS: "Password123"
+    image: rabbitmq:3.8.3-management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - npvcalculation_network
+
+  mssql:
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SQL_USERNAME: "SA"
+      SA_PASSWORD: "Password123"
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    networks:
+      - npvcalculation_network
+
+  mssql-init:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - mssql
+    entrypoint: /bin/bash -c "sleep 30 && /opt/mssql-tools/bin/sqlcmd -S mssql -U SA -P Password123 -i /db-init/migrations.sql"
+    volumes:
+      - ./api:/db-init
+    networks:
+      - npvcalculation_network
+
+  cashflow_service:
+    restart: always
+    build:
+      context: ./api
+      dockerfile: CashFlow.dockerfile
+    image: cashflow_service
+    ports:
+      - "5100:5100"
+    networks:
+      - npvcalculation_network
+    depends_on: 
+      - mssql
+      - rabbitmq
+      - mongo
+    environment:
+      ASPNETCORE_URLS: http://+:5100
+    command: ["dotnet", "CashFlow.Api.dll"]
+
+  npvcalculation_service:
+    restart: always
+    build:
+      context: ./api
+      dockerfile: NPVCalculation.dockerfile
+    image: npvcalculation_service
+    ports:
+      - "5200:5200"
+    networks:
+      - npvcalculation_network
+    depends_on: 
+      - mssql
+      - rabbitmq
+      - mongo
+    environment:
+      ASPNETCORE_URLS: http://+:5200
+    command: ["dotnet", "NPVCalculation.Api.dll"]
+
+  # frontend:
+  #   restart: always
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Frontend.dockerfile
+  #   ports:
+  #     - "4200:80"
+  #   depends_on:
+  #     - cashflow_service
+  #     - npvcalculation_service
+
+
+networks:
+  npvcalculation_network:
+    driver: bridge
+
+volumes:
+  mongo-data:
