@@ -82,16 +82,16 @@ services:
       ASPNETCORE_URLS: http://+:5200
     command: ["dotnet", "NPVCalculation.Api.dll"]
 
-  # frontend:
-  #   restart: always
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Frontend.dockerfile
-  #   ports:
-  #     - "4200:80"
-  #   depends_on:
-  #     - cashflow_service
-  #     - npvcalculation_service
+  frontend:
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Frontend.dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - cashflow_service
+      - npvcalculation_service
 
 
 networks:
