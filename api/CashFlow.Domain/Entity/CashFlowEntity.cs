@@ -15,5 +15,12 @@ namespace CashFlow.Domain.Entity
 
         public DiscountRates DiscountRates { get; set; }
         public double Increment { get; set; }
+        public bool HasNpvCalculation { get; set; }
+
+
+        public void MarkNpvCalculationTriggered()
+        {
+            HasNpvCalculation = true;
+        }
     }
 }

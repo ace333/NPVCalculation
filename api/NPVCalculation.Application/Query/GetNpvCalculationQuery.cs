@@ -3,7 +3,7 @@ using NPVCalculation.Application.Dto;
 
 namespace NPVCalculation.Application.Query
 {
-    public class GetNpvCalculationQuery : IRequest<IEnumerable<NpvCalculationDto>>
+    public class GetNpvCalculationQuery : IRequest<NpvCalculationQueryDto>
     {
         public GetNpvCalculationQuery(int cashFlowId)
         {

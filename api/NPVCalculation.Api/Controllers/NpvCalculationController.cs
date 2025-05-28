@@ -20,7 +20,7 @@ namespace NPVCalculation.Api.Controllers
 
         [HttpGet("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(NpvCalculationDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(NpvCalculationQueryDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [SwaggerResponse(StatusCodes.Status200OK)]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Npv calculation not found for a given cash flow id")]

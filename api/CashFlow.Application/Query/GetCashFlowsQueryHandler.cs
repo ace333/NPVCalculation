@@ -21,7 +21,7 @@ namespace CashFlow.Application.Query
             }
 
             return await _cashFlowRepository.GetAll()
-                .Select(c => new CashFlowDto(c.Id, c.DiscountRates.LowerBound, c.DiscountRates.UpperBound, c.Increment))
+                .Select(c => new CashFlowDto(c.Id, c.DiscountRates.LowerBound, c.DiscountRates.UpperBound, c.Increment, c.HasNpvCalculation))
                 .AsPaginatedList(request.Limit, request.Offset);
         }
     }

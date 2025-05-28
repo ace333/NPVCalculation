@@ -48,3 +48,28 @@ GO
 COMMIT;
 GO
 
+BEGIN TRANSACTION;
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250528054036_AdjustProperty'
+)
+BEGIN
+    ALTER TABLE [CashFlow] ADD [HasNpvCalculation] bit NOT NULL DEFAULT CAST(0 AS bit);
+END;
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM [__EFMigrationsHistory]
+    WHERE [MigrationId] = N'20250528054036_AdjustProperty'
+)
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20250528054036_AdjustProperty', N'8.0.16');
+END;
+GO
+
+COMMIT;
+GO
+

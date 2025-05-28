@@ -26,6 +26,8 @@ namespace CashFlow.Application.Command
             var noSqlCashFlow = await _noSqlCashFlowRepository.FindNpvCalculationById(request.CashFlowId);
 
             cashFlow.AddDomainEvent(new NpvCalculationTriggered(cashFlow.Id, noSqlCashFlow.Values, cashFlow.DiscountRates, cashFlow.Increment));
+            cashFlow.MarkNpvCalculationTriggered();
+
             await _cashFlowRepository.CommitAsync();
         }
     }

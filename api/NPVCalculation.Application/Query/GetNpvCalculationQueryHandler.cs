@@ -4,7 +4,7 @@ using NPVCalculation.Infrastructure.Repository;
 
 namespace NPVCalculation.Application.Query
 {
-    public class GetNpvCalculationQueryHandler : IRequestHandler<GetNpvCalculationQuery, IEnumerable<NpvCalculationDto>>
+    public class GetNpvCalculationQueryHandler : IRequestHandler<GetNpvCalculationQuery, NpvCalculationQueryDto>
     {
         private readonly INpvCalculationRepository _npvCalculationRepository;
 
@@ -13,21 +13,21 @@ namespace NPVCalculation.Application.Query
             _npvCalculationRepository = npvCalculationRepository;
         }
 
-        public async Task<IEnumerable<NpvCalculationDto>> Handle(GetNpvCalculationQuery request, CancellationToken cancellationToken)
+        public async Task<NpvCalculationQueryDto> Handle(GetNpvCalculationQuery request, CancellationToken cancellationToken)
         {
-            if(request == null)
+            if (request == null)
             {
                 throw new ArgumentNullException("Query is null");
             }
 
             var result = await _npvCalculationRepository.FindNpvCalculationByCashFlowId(request.CashFlowId);
 
-            if(result == null)
+            if (result == null)
             {
                 throw new InvalidOperationException("Npv calculation not found for a given cash flow");
             }
 
-            return result.NpvCalculations.Select(x => new NpvCalculationDto(x.Rate, x.NpvValue));
+            return new NpvCalculationQueryDto(result.NpvCalculations.Select(x => new NpvCalculationDto(x.Rate, x.NpvValue)));
         }
     }
 }
