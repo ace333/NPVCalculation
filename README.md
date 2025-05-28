@@ -53,7 +53,7 @@ cd CompanyAPI
 ### 2. Build and Run with Docker Compose
 
 ```bash
-docker-compose up --build
+docker-compose up -d --build
 ```
 
 This will:
