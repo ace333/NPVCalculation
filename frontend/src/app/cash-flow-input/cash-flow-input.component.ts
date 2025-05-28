@@ -30,7 +30,6 @@ export class CashFlowInputComponent {
   onCreateClick(): void {
     if (this.cashFlowForm.valid) {
       var command = { ...this.cashFlowForm.value, cashFlowValues: this.getCashFlowValues() } as CashFlowCommand;
-      debugger;
       this.cashFlowApi
         .createCashFlow(command)
         .pipe(

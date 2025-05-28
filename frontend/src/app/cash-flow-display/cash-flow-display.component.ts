@@ -45,7 +45,6 @@ export class CashFlowDisplayComponent {
         )
       )
       .subscribe((npvCalculation: NpvCalculationQuery) => {
-        debugger;
         this.npvCalcuation = [{
           name: 'Npv Calculation',
           series: npvCalculation.npvCalculations.map((x) => {

@@ -40,7 +40,6 @@ export class GridComponent {
   }
 
   onRowClick($event: CashFlow) {
-    debugger;
     if($event.hasNpvCalculation) {
       this.router.navigate(['cashflow', $event.id]);
     }
