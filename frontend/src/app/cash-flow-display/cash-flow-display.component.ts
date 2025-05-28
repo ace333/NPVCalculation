@@ -15,7 +15,7 @@ import {
   styleUrls: ['./cash-flow-display.component.scss'],
 })
 export class CashFlowDisplayComponent {
-  npvCalcuation: NpvCalculationGraph | undefined;
+  npvCalcuation: NpvCalculationGraph[] | undefined;
 
   // options
   view = [700, 300];
@@ -45,7 +45,8 @@ export class CashFlowDisplayComponent {
         )
       )
       .subscribe((npvCalculation: NpvCalculationQuery) => {
-        this.npvCalcuation = {
+        debugger;
+        this.npvCalcuation = [{
           name: 'Npv Calculation',
           series: npvCalculation.npvCalculations.map((x) => {
             return {
@@ -53,7 +54,7 @@ export class CashFlowDisplayComponent {
               value: x.npvCalculation,
             } as NpvCalculationGraphElement;
           }),
-        } as NpvCalculationGraph;
+        } as NpvCalculationGraph];
       });
   }
 }
