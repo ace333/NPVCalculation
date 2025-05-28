@@ -1,0 +1,67 @@
+<div class="card-container">
+  <mat-paginator
+    [length]="pageInfo.totalRecords"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+  <table mat-table [dataSource]="cashFlows" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let cashFlow">{{ cashFlow?.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="lowerBoundDiscountRate">
+      <th mat-header-cell *matHeaderCellDef>Lower discount rate</th>
+      <td mat-cell *matCellDef="let cashFlow">
+        {{ cashFlow?.lowerBoundDiscountRate }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="upperBoundDiscountRate">
+      <th mat-header-cell *matHeaderCellDef>Upper discount rate</th>
+      <td mat-cell *matCellDef="let cashFlow">
+        {{ cashFlow?.upperBoundDiscountRate }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="increment">
+      <th mat-header-cell *matHeaderCellDef>Increment</th>
+      <td mat-cell *matCellDef="let cashFlow">{{ cashFlow?.increment }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="hasNpvCalculation">
+      <th mat-header-cell *matHeaderCellDef>NPV</th>
+      <td mat-cell *matCellDef="let cashFlow">
+        <button
+          mat-raised-button
+          mat-button
+          color="primary"
+          [disabled]="cashFlow.hasNpvCalculation"
+          (click)="onTriggerNpvCalculation(cashFlow?.id)"
+        >
+          Trigger NPV Calculation
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="onRowClick(row)"
+    ></tr>
+  </table>
+
+  <button
+    class="mg-top-1"
+    mat-raised-button
+    mat-button
+    color="primary"
+    [routerLink]="['/cashflow-new']"
+  >
+    Create new cash flow
+  </button>
+</div>

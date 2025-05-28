@@ -1,0 +1,20 @@
+:host {
+  width: 100%;
+
+  table {
+    width: 100%;
+  }
+
+  tr:not(.example-expanded-row):hover {
+    background: whitesmoke;
+    cursor: pointer;
+  }
+
+  tr:not(.example-expanded-row):active {
+    background: #efefef;
+  }
+
+  .mg-top-1 {
+    margin-top: 1rem;
+  }
+}

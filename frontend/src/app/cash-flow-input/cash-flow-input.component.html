@@ -1,0 +1,29 @@
+<div [formGroup]="cashFlowForm">
+  <div formArrayName="cashFlows">
+    <div *ngFor="let control of cashFlows.controls; let i = index" [formGroupName]="i" class="cash-flow-row">
+      <mat-form-field>
+        <mat-label>Cash flow</mat-label>
+        <input matInput type="number" formControlName="value" placeholder="Cash flow {{ i + 1 }}" />
+      </mat-form-field>
+      <button mat-raised-button mat-button color="secondary" (click)="removeCashFlow(i)">Remove</button>
+    </div>
+  </div>
+
+  <button mat-raised-button mat-button color="primary" (click)="addCashFlow()">Add Cash Flow</button>
+
+  <mat-form-field>
+    <mat-label>Lower discount rate</mat-label>
+    <input matInput type="number" formControlName="lowerBoundDiscountRate">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Upper bound discount rate</mat-label>
+    <input matInput type="number" formControlName="upperBoundDiscountRate">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Increment</mat-label>
+    <input matInput type="number" formControlName="increment">
+  </mat-form-field>
+</div>
+
+<button class="mg-right-1" mat-raised-button mat-button color="secondary" [routerLink]="['/grid']" >Go back</button>
+<button mat-raised-button mat-button color="primary" [disabled]="!cashFlowForm.valid" (click)="onCreateClick()">Create</button>

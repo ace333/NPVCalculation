@@ -1,0 +1,13 @@
+<div *ngIf="npvCalcuation">
+  <ngx-charts-line-chart
+    [results]="npvCalcuation"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="false"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Discount Rate'"
+    [yAxisLabel]="'NPV'"
+  >
+  </ngx-charts-line-chart>
+</div>
